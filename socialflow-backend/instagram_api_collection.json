@@ -1,0 +1,609 @@
+{
+	"info": {
+		"_postman_id": "YOUR_COLLECTION_ID",
+		"name": "Instagram Clone API",
+		"description": "API collection for the Instagram Clone Backend",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json"
+	},
+	"item": [
+		{
+			"name": "Authentication",
+			"item": [
+				{
+					"name": "Sign Up",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Test User\",\n    \"email\": \"test@example.com\",\n    \"password\": \"password123\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/signup",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"signup"
+							]
+						},
+						"description": "Register a new user."
+					},
+					"response": []
+				},
+				{
+					"name": "Login",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"email\": \"test@example.com\",\n    \"password\": \"password123\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/auth/login",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"login"
+							]
+						},
+						"description": "Login an existing user and get a token."
+					},
+					"response": []
+				},
+				{
+					"name": "Logout",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/auth/logout",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"logout"
+							]
+						},
+						"description": "Logout the current user."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Zuckerberg Message",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/auth/zuku",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"auth",
+								"zuku"
+							]
+						},
+						"description": "Get a random message (requires login)."
+					},
+					"response": []
+				}
+			],
+			"description": "Endpoints for user authentication."
+		},
+		{
+			"name": "Post",
+			"item": [
+				{
+					"name": "Upload File",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"body": {
+							"mode": "formdata",
+							"formdata": [
+								{
+									"key": "file",
+									"type": "file",
+									"src": [] 
+								}
+							]
+						},
+						"url": {
+							"raw": "{{baseUrl}}/post/upload",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"post",
+								"upload"
+							]
+						},
+						"description": "Upload an image file (png, jpg, jpeg)."
+					},
+					"response": []
+				},
+				{
+					"name": "Create Post",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"text\": \"This is a sample post!\",\n    \"image\": \"{{uploadedImageUrl}}\" // Optional: Use URL from Upload File response\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/post/create",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"post",
+								"create"
+							]
+						},
+						"description": "Create a new post with text and/or image."
+					},
+					"response": []
+				},
+				{
+					"name": "Update Post",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"text\": \"Updated post text!\",\n    \"image\": \"{{newImageUrl}}\" // Optional\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/post/update/{{postId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"post",
+								"update",
+								"{{postId}}"
+							]
+						},
+						"description": "Update an existing post by ID."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Post",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/post/delete/{{postId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"post",
+								"delete",
+								"{{postId}}"
+							]
+						},
+						"description": "Delete a post by ID."
+					},
+					"response": []
+				},
+				{
+					"name": "View Post",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/post/view/{{postId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"post",
+								"view",
+								"{{postId}}"
+							]
+						},
+						"description": "View a specific post by ID."
+					},
+					"response": []
+				},
+				{
+					"name": "Get My Posts",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/post/my-posts",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"post",
+								"my-posts"
+							]
+						},
+						"description": "Get all posts created by the logged-in user."
+					},
+					"response": []
+				},
+				{
+					"name": "Get All Posts",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/post/all-posts",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"post",
+								"all-posts"
+							]
+						},
+						"description": "Get all posts from all users."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Feed",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/post/feed",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"post",
+								"feed"
+							]
+						},
+						"description": "Get the user's feed (all posts, sorted)."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Post Stats",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/post/stats/{{postId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"post",
+								"stats",
+								"{{postId}}"
+							]
+						},
+						"description": "Get statistics (likes, comments) for a specific post."
+					},
+					"response": []
+				},
+				{
+					"name": "Like Post",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/post/like/{{postId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"post",
+								"like",
+								"{{postId}}"
+							]
+						},
+						"description": "Like a specific post."
+					},
+					"response": []
+				},
+				{
+					"name": "Unlike Post",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/post/unlike/{{postId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"post",
+								"unlike",
+								"{{postId}}"
+							]
+						},
+						"description": "Unlike a specific post."
+					},
+					"response": []
+				}
+			],
+			"description": "Endpoints for managing posts."
+		},
+		{
+			"name": "Comment",
+			"item": [
+				{
+					"name": "Create Comment",
+					"request": {
+						"method": "POST",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"text\": \"This is a comment!\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/comment/create/{{postId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"comment",
+								"create",
+								"{{postId}}"
+							]
+						},
+						"description": "Add a comment to a specific post."
+					},
+					"response": []
+				},
+				{
+					"name": "Get Comments",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/comment/{{postId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"comment",
+								"{{postId}}"
+							]
+						},
+						"description": "Get all comments for a specific post."
+					},
+					"response": []
+				},
+				{
+					"name": "Delete Comment",
+					"request": {
+						"method": "DELETE",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/comment/{{commentId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"comment",
+								"{{commentId}}"
+							]
+						},
+						"description": "Delete a specific comment by its ID."
+					},
+					"response": []
+				}
+			],
+			"description": "Endpoints for managing comments."
+		},
+		{
+			"name": "User",
+			"item": [
+				{
+					"name": "Get User Profile",
+					"request": {
+						"method": "GET",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							}
+						],
+						"url": {
+							"raw": "{{baseUrl}}/user/profile/{{userId}}",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user",
+								"profile",
+								"{{userId}}"
+							]
+						},
+						"description": "Get the profile information for a specific user."
+					},
+					"response": []
+				},
+				{
+					"name": "Update Profile",
+					"request": {
+						"method": "PUT",
+						"header": [
+							{
+								"key": "Authorization",
+								"value": "Bearer {{token}}"
+							},
+							{
+								"key": "Content-Type",
+								"value": "application/json"
+							}
+						],
+						"body": {
+							"mode": "raw",
+							"raw": "{\n    \"name\": \"Updated Name\"\n}"
+						},
+						"url": {
+							"raw": "{{baseUrl}}/user/profile",
+							"host": [
+								"{{baseUrl}}"
+							],
+							"path": [
+								"user",
+								"profile"
+							]
+						},
+						"description": "Update the profile (name) of the logged-in user."
+					},
+					"response": []
+				}
+			],
+			"description": "Endpoints for user profile management."
+		}
+	],
+	"variable": [
+		{
+			"key": "baseUrl",
+			"value": "YOUR_DEPLOYED_API_BASE_URL/api", 
+			"type": "string"
+		},
+		{
+			"key": "token",
+			"value": "YOUR_AUTH_TOKEN", 
+			"type": "string"
+		},
+		{
+			"key": "postId",
+			"value": "POST_ID_TO_TEST",
+			"type": "string"
+		},
+		{
+			"key": "commentId",
+			"value": "COMMENT_ID_TO_TEST",
+			"type": "string"
+		},
+		{
+			"key": "userId",
+			"value": "USER_ID_TO_TEST",
+			"type": "string"
+		},
+		{
+			"key": "uploadedImageUrl",
+			"value": "CLOUDINARY_URL_FROM_UPLOAD",
+			"type": "string"
+		},
+		{
+			"key": "newImageUrl",
+			"value": "NEW_CLOUDINARY_URL",
+			"type": "string"
+		}
+	]
+}
