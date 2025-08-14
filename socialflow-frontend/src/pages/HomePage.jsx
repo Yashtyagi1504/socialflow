@@ -170,7 +170,7 @@ function HomePage() {
           </div>
 
           <div className="mt-8 text-xs text-gray-400">
-            <p>&copy; 2025 Instagram Clone</p>
+            <p>&copy; 2024 Instagram Clone</p>
           </div>
         </div>
       </div>
